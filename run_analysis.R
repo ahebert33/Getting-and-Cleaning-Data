@@ -65,8 +65,11 @@ keepCols <- grepl("activity_key", headers_list) | grepl("subject_key", headers_l
 selected_data <- all_data[,keepCols]
 # now merge activity labels with selected data using activity_key as common key
 labeled_selected_data <- merge(selected_data, activities, by = "activity_key", all.x = TRUE)
+labeled_selected_data %>% relocate(activity, .before = activity_key)
 
-Data_Results <- aggregate(. ~ activity_key + subject_key , labeled_selected_data,FUN = mean)
+# remove activity_key column
+labeled_selected_data$activity_key = NULL
+Data_Results <- aggregate(. ~ activity + subject_key , labeled_selected_data,FUN = mean)
 
 # save final results
 write.table(Data_Results,"Cleaning_Data_project_results.txt", row.names = FALSE)
