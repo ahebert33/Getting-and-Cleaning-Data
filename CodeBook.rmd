@@ -1,0 +1,105 @@
+---
+title: "CodeBook"
+author: "Andy Hebert"
+date: "6/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Getting and Cleaning Data Week 4 project
+This document will provide a descripition of all declared variables for protocol
+run_analysis.R
+
+
+### Files imported for this script
+run_analysis.R is an R script file that contains no functions
+
+Data for this project was retrieved from the link below
+
+UCI_HAR_dataset - Human Activity Recognition Using Smartphones datasets
+<https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip>
+
+For a complete description of the raw data see the README file included with the above data set.
+Below are the actual files extracted and used in this script
+
+features.txt contains 2 variables and 561 observations
+      features_key - int
+      measurement_type - char
+
+activity_labels.txt contains 2 variables and 6 observations
+      activity_key
+      activity
+
+subject_test.txt contains 1 variable and 2947 observations
+      subject_key
+subject_train.txt contains 1 variable and 7352 observations
+
+x_test.txt contains 561 variables and 2947 observations
+      see features.txt - contains column names for this file
+      
+y_test.txt contains 1 variable and 2947 observations
+      activity_key
+      
+x_train.txt contains 561 variables and 7352 observations
+      column names come from features.txt
+y_train.txt contains 1 variable and 7352 observations
+      actvity_key
+      
+      
+
+### run_analysis.R script variables
+
+var features 
+      - a table containing data read in from features.txt
+      add column names to this table "features_key" and "measurment_type"
+var activities
+      - a table that contains a description of the activity performed and a "key column"
+            activity_key, activity
+var subject_test
+      a table with one column containing an integer as a subject identifier for the test data set
+
+var subject_train
+      - a table with one column containing an int as a subject identifier for the training data set
+
+var x_test
+      - a data.frame with measurments for each feature for test data set
+
+var x_train
+      - a data.frame with measurments for each feature for training data set
+
+var y_test
+      - a data.frame with activity_key for test data set
+var y_train
+      - a data.fram with activity_key for training data set
+
+var all_train
+      - a data.frame in which all columns from y_train, subject_train and x_train are combined
+            activity_key, subject_key, features
+      
+var all_test
+      - a data.frame in which all columns from y_test, subject_test and x_test are combined
+            activity_key, subject_key, features
+
+var all_data
+      - a data.frame in which the rows from all_train and all_test are concatenated together
+      
+var headers_list
+      - a list of chr containing all the column names from all_data
+
+var keep_Cols
+      - a list of logicals of which column names meet criteria for keeping (TRUE)
+            any col that contains mean() or std()
+            cols activity_key and subject_key
+
+var selected_data
+      - a new data.frame containing only those columns listed as TRUE in keep_Cols
+
+var labeled_selected_data
+      - the selected_data data.frame with a descriptive label for each activites
+            this needs to be done close to the end of the processing as it will reorder the data
+
+var Data_Results
+      - final tidy data set containing means for each column by activity then by subject
